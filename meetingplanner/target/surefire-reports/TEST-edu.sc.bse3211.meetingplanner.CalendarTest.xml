@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.118" tests="1" errors="0" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.13" tests="4" errors="0" skipped="0" failures="1">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/kalema/Downloads/meetingplanner/meetingplanner/target/test-classes:/home/kalema/Downloads/meetingplanner/meetingplanner/target/classes:/home/kalema/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/kalema/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.class.path" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/test-classes:/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/classes:/home/kalema/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/kalema/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
@@ -12,10 +12,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/home/kalema/jdk-17.0.9/lib"/>
-    <property name="sun.java.command" value="/home/kalema/Downloads/meetingplanner/meetingplanner/target/surefire/surefirebooter648099416521388231.jar /home/kalema/Downloads/meetingplanner/meetingplanner/target/surefire 2024-03-24T00-49-07_020-jvmRun1 surefire7852804178726798898tmp surefire_04339333099782003361tmp"/>
+    <property name="sun.java.command" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire/surefirebooter4280961430324049454.jar /home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire 2024-03-24T01-44-57_365-jvmRun1 surefire12439955830020189323tmp surefire_05689926407404413559tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="CalendarTest#testIsBusy"/>
-    <property name="surefire.test.class.path" value="/home/kalema/Downloads/meetingplanner/meetingplanner/target/test-classes:/home/kalema/Downloads/meetingplanner/meetingplanner/target/classes:/home/kalema/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/kalema/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="surefire.test.class.path" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/test-classes:/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/classes:/home/kalema/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/kalema/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/kalema"/>
     <property name="user.language" value="en"/>
@@ -23,12 +22,12 @@
     <property name="java.version.date" value="2023-10-17"/>
     <property name="java.home" value="/home/kalema/jdk-17.0.9"/>
     <property name="file.separator" value="/"/>
-    <property name="basedir" value="/home/kalema/Downloads/meetingplanner/meetingplanner"/>
+    <property name="basedir" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner"/>
     <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/kalema/Downloads/meetingplanner/meetingplanner/target/surefire/surefirebooter648099416521388231.jar"/>
+    <property name="surefire.real.class.path" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire/surefirebooter4280961430324049454.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.9+11-LTS-201"/>
     <property name="user.name" value="kalema"/>
@@ -41,7 +40,7 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="java.version" value="17.0.9"/>
-    <property name="user.dir" value="/home/kalema/Downloads/meetingplanner/meetingplanner"/>
+    <property name="user.dir" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="native.encoding" value="UTF-8"/>
@@ -52,9 +51,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testIsBusy" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.013">
-    <failure message="Should not throw exception: Overlap with another item - First Meeting - scheduled from 0 and 23" type="java.lang.AssertionError">java.lang.AssertionError: Should not throw exception: Overlap with another item - First Meeting - scheduled from 0 and 23
-	at edu.sc.bse3211.meetingplanner.CalendarTest.testIsBusy(CalendarTest.java:43)
+  <testcase name="testAddMeeting_holiday" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.013"/>
+  <testcase name="testClearScheduleOnDayWithNoMeeting" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
+  <testcase name="testClearSchedule" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
+  <testcase name="testAddMeetingSameDay" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.009">
+    <failure message="Method addMeeting() has thrown the exception: Overlap with another item - First Meeting - scheduled from 0 and 23" type="java.lang.AssertionError">java.lang.AssertionError: Method addMeeting() has thrown the exception: Overlap with another item - First Meeting - scheduled from 0 and 23
+	at edu.sc.bse3211.meetingplanner.CalendarTest.testAddMeetingSameDay(CalendarTest.java:40)
 </failure>
   </testcase>
 </testsuite>
