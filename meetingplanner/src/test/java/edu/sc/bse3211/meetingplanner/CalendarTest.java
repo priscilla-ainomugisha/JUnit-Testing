@@ -41,25 +41,26 @@ public class CalendarTest {
 			assertEquals("Day does not exist.", e.getMessage());
 		}
 	}
-
-
 	
 	@Test
 	public void testAddMeeting_meetingsOverlap() throws TimeConflictException {
+		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException
+		//                       when attempting to add a meeting with a time that overlaps with an existing meeting 
+		//                       on the same date.
+
 		Calendar calendar = new Calendar();
+		Meeting meeting1 = new Meeting(3, 15, 10, 12);
+		Meeting meeting2 = new Meeting(3, 15, 11, 13); 
+
+		calendar.addMeeting(meeting1);
 		try {
-			Meeting meeting1 = new Meeting(3, 15, 10, 12);
-			calendar.addMeeting(meeting1);
-
-			Meeting meeting2 = new Meeting(3, 15, 11, 13);
-			calendar.addMeeting(meeting2);
-
-			fail("Expected TimeConflictException");
-			
+			calendar.addMeeting(meeting2); 
+			fail("Expected TimeConflictException for overlapping meetings");
 		} catch (TimeConflictException e) {
 			assertTrue(e.getMessage().contains("Overlap with another item"));
 		}
 	}
+
 
 	// The test fails if an exception is thrown, because it means the calendar is busy and clearSchedule() failed.
 	@Test
