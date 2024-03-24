@@ -23,7 +23,7 @@ mvn test
 ```
 #### Run particular test function/method
 ```
-mvn -Dtest=test_filename#method_name test
+mvn -Dtest=testFileName#testMethodName test
 ```
 For example, to run testIsBusy() located in CalendarTest.java, use the command below.
 
