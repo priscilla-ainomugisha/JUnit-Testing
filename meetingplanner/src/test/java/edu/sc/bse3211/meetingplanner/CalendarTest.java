@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,10 +30,14 @@ public class CalendarTest {
 
 	// Test fails if an exception is not thrown. Also, we check whether the appropriate exception "Day does not exist" is thrown.
 	@Test
-	public void testAddMeeting_invalidDate() {
+	public void testAddMeeting_invalidDate() throws TimeConflictException {
 		Calendar calendar = new Calendar();
+
+		Room room = new Room("B141");
+		Person john = new Person("Namuli Sylvia");
+		ArrayList<Person> attendee = new ArrayList<>(Arrays.asList(john));
 		try {
-			Meeting meeting = new Meeting(2, 30, 10, 12);
+			Meeting meeting = new Meeting(2, 30, 10, 12,  attendee, room, "Invalid Meeting");
 			calendar.addMeeting(meeting);
 			fail("Should throw exception for an invalid date.");
 		} catch (TimeConflictException e) {
@@ -40,9 +45,9 @@ public class CalendarTest {
 		}
 	}
 
-	// This test fails if the exception "Overlap with another time" is not thrown.
+	// This test fails if the exception "Overlap with another meeting" is not thrown.
 	@Test
-	public void testAddMeeting_overlappingMeetings() {
+	public void testAddMeeting_meetingsOverlap() throws TimeConflictException {
 		// Add a meeting for 3/15, 10-12
 		Calendar calendar = new Calendar();
 		try {
@@ -52,15 +57,17 @@ public class CalendarTest {
 			// Try to add another meeting with overlapping time, 11-13
 			Meeting meeting2 = new Meeting(3, 15, 11, 13);
 			calendar.addMeeting(meeting2);
-			fail("Should throw exception for overlapping meetings.");
+
+			fail("Expected TimeConflictException");
+			
 		} catch (TimeConflictException e) {
-			assertTrue(e.getMessage().contains("Overlap with another item"));
+				assertTrue(e.getMessage().contains("Overlap with another item"));
 		}
 	}
 
 	// The test fails if an exception is thrown, because it means the calendar is busy and clearSchedule() failed.
 	@Test
-	public void testClearSchedule() {
+	public void testClearSchedule() throws TimeConflictException {
 		try {
 			Calendar calendar = new Calendar();
 			Meeting meeting = new Meeting(4, 20, 9, 10);
@@ -73,8 +80,12 @@ public class CalendarTest {
 		}
 	}
 
+
+	// 5/10, 13 - 14,B101: Meeting 1 Attending: Namuli Sylvia
+	// 5/18, 9 - 11,C205: Meeting 2 Attending: Ainomugisha Priscilla
+	// This output is not easily interpretable
 	@Test
-	public void testPrintAgenda() {
+	public void testPrintAgenda() throws TimeConflictException {
 		Calendar calendar = new Calendar();
 
 		// Rooms
@@ -101,14 +112,11 @@ public class CalendarTest {
 
 		// Print the agenda for the month
 		String agenda = calendar.printAgenda(5);
+		System.out.println(agenda);
 
 		// Adjust assertions based on the expected output format
 		assertTrue(agenda.contains("Meeting 1: 5/10/2024 1:00 PM - 2:00 PM in B101 (Attendees: Namuli Sylvia)"));
 		assertTrue(agenda.contains("Meeting 2: 5/18/2024 9:00 AM - 11:00 AM in C205 (Attendees: Ainomugisha Priscilla)"));
 	}
-
-
-
-
 	
 }
