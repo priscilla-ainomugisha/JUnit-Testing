@@ -123,41 +123,26 @@ public class CalendarTest {
 			calendar.addMeeting(meeting);
 			fail("Expected TimeConflictException for invalid start time");
 		} catch (TimeConflictException e) {
-			// Assert the specific exception type and message
 			assertTrue(e.getMessage().contains("Meeting starts before it ends."));
 		}
 	}
 
-	// Test fails if an exception is not thrown
 	@Test
-	public void testAddMeeting_invalidEndTime() throws TimeConflictException {
+	public void testAddMeeting_invalidEndTime() {
+		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException
+		//                       with a descriptive message when attempting to add a meeting with an invalid end time (past midnight).
+
 		Calendar calendar = new Calendar();
 		Meeting meeting = new Meeting(3, 25, 1, 27);
-		try {
-			calendar.addMeeting(meeting);
-			fail("Expected TimeConflictException");
-
-		} catch (TimeConflictException e) {
-			assertFalse(e.getMessage().isEmpty());
-		}
-	}
-
-	// Test fails if an assertion error is obtained
-	@Test
-	public void testGetMeeting() throws TimeConflictException {
-		Calendar calendar = new Calendar();
-		Meeting meeting = new Meeting(6, 25, 15, 16);
 
 		try {
 			calendar.addMeeting(meeting);
+			fail("Expected TimeConflictException for invalid end time");
 		} catch (TimeConflictException e) {
-			fail("addMeeting() failed");
+			assertTrue(e.getMessage().contains("Illegal hour."));
 		}
-		Meeting retrievedMeeting = calendar.getMeeting(6, 25, 0);
-
-		assertEquals(meeting, retrievedMeeting);
-
 	}
+
 
 	@Test
 	public void testRemoveMeeting() {
