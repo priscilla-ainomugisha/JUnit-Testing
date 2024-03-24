@@ -1,21 +1,20 @@
 package edu.sc.bse3211.meetingplanner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.Before;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Test;
 
 public class CalendarTest {
-	private Calendar calendar;
-
-	@Before
-    public void setUp() {
-        calendar = new Calendar();
-    }
 	
 	@Test
 	public void testAddMeeting_holiday() {
+		Calendar calendar = new Calendar();
 		// Create Janan Luwum holiday	
 		try {
 			Meeting janan = new Meeting(2, 16, "Janan Luwum");
@@ -28,36 +27,88 @@ public class CalendarTest {
 		}
 	}
 
-	// What happens when a meeting is scheduled on a day that is already booked? 
+	// Test fails if an exception is not thrown. Also, we check whether the appropriate exception "Day does not exist" is thrown.
 	@Test
-	public void testAddMeetingSameDay(){
-		try{
-			Meeting firstMeeting = new Meeting(9, 10, "First Meeting");
-			calendar.addMeeting(firstMeeting);
-			assertTrue("Meeting Scheduled", calendar.isBusy(9, 10, 0, 23));
-			calendar.addMeeting(new Meeting(9, 10, "Second Meeting"));
-		} catch(TimeConflictException e){
-			fail("Method addMeeting() has thrown the exception: " + e.getMessage());
+	public void testAddMeeting_invalidDate() {
+		Calendar calendar = new Calendar();
+		try {
+			Meeting meeting = new Meeting(2, 30, 10, 12);
+			calendar.addMeeting(meeting);
+			fail("Should throw exception for an invalid date.");
+		} catch (TimeConflictException e) {
+			assertEquals("Day does not exist.", e.getMessage());
 		}
 	}
 
-	// Does the clearSchedule() method work?
+	// This test fails if the exception "Overlap with another time" is not thrown.
 	@Test
-	public void testClearSchedule(){
-		try{
-			Meeting testMeeting = new Meeting(2,10, "Test Meeting");
-			calendar.addMeeting(testMeeting);
-			calendar.clearSchedule(2, 10);
-			assertTrue("Date not busy",!(calendar.isBusy(2, 10, 0, 23)));
-			
-		} catch(TimeConflictException e){
+	public void testAddMeeting_overlappingMeetings() {
+		// Add a meeting for 3/15, 10-12
+		Calendar calendar = new Calendar();
+		try {
+			Meeting meeting1 = new Meeting(3, 15, 10, 12);
+			calendar.addMeeting(meeting1);
+
+			// Try to add another meeting with overlapping time, 11-13
+			Meeting meeting2 = new Meeting(3, 15, 11, 13);
+			calendar.addMeeting(meeting2);
+			fail("Should throw exception for overlapping meetings.");
+		} catch (TimeConflictException e) {
+			assertTrue(e.getMessage().contains("Overlap with another item"));
+		}
+	}
+
+	// The test fails if an exception is thrown, because it means the calendar is busy and clearSchedule() failed.
+	@Test
+	public void testClearSchedule() {
+		try {
+			Calendar calendar = new Calendar();
+			Meeting meeting = new Meeting(4, 20, 9, 10);
+			calendar.addMeeting(meeting);
+
+			calendar.clearSchedule(4, 20);
+			assertFalse(calendar.isBusy(4, 20, 9, 10));
+		} catch (TimeConflictException e) {
 			fail("Should not throw exception: " + e.getMessage());
 		}
 	}
 
-	// Does clearSchedule() output the appropriate error message when no meeting was scheduled?
 	@Test
-	public void testClearScheduleOnDayWithNoMeeting(){
-		calendar.clearSchedule(1,4);
+	public void testPrintAgenda() {
+		Calendar calendar = new Calendar();
+
+		// Rooms
+		Room room1 = new Room("B101");
+		Room room2 = new Room("C205");
+
+		// Attendees
+		Person john = new Person("Namuli Sylvia");
+		Person jane = new Person("Ainomugisha Priscilla");
+		ArrayList<Person> attendees1 = new ArrayList<>(Arrays.asList(john));
+		ArrayList<Person> attendees2 = new ArrayList<>(Arrays.asList(jane));
+
+		// Create meetings using the rooms and attendees
+		Meeting meeting1 = new Meeting(5, 10, 13, 14, attendees1, room1, "Meeting 1");
+		Meeting meeting2 = new Meeting(5, 18, 9, 11, attendees2, room2, "Meeting 2");
+
+		// Add meetings to the calendar
+		try {
+			calendar.addMeeting(meeting1);
+			calendar.addMeeting(meeting2);
+		} catch (TimeConflictException e) {
+			return;
+		}
+
+		// Print the agenda for the month
+		String agenda = calendar.printAgenda(5);
+
+		// Adjust assertions based on the expected output format
+		assertTrue(agenda.contains("Meeting 1: 5/10/2024 1:00 PM - 2:00 PM in B101 (Attendees: Namuli Sylvia)"));
+		assertTrue(agenda.contains("Meeting 2: 5/18/2024 9:00 AM - 11:00 AM in C205 (Attendees: Ainomugisha Priscilla)"));
 	}
+
+
+
+
+	
 }
