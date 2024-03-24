@@ -83,10 +83,10 @@ public class CalendarTest {
 		//                       including meeting details (date, time, room, attendees, title).
 
 		Calendar calendar = new Calendar();
-		Room room1 = new Room("B101");
+		Room room = new Room("B101");
 		Person sylvia = new Person("Namuli Sylvia");
-		ArrayList<Person> attendees1 = new ArrayList<>(Arrays.asList(sylvia));
-		Meeting meeting1 = new Meeting(5, 10, 13, 14, attendees1, room1, "Meeting 1");
+		ArrayList<Person> attendees = new ArrayList<>(Arrays.asList(sylvia));
+		Meeting meeting1 = new Meeting(5, 10, 13, 14, attendees, room, "Meeting 1");
 
 		calendar.addMeeting(meeting1);
 		String agenda = calendar.printAgenda(5);
@@ -95,21 +95,22 @@ public class CalendarTest {
 		assertEquals("Meeting agenda should match expected format", expectedOutput, agenda);
 	}
 
-	// Test fails if no exception is thrown
 	@Test
 	public void testAddMeeting_SameStartTimeEndTime() throws TimeConflictException {
+		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException
+		//                       with the correct message when attempting to add a meeting with the same start and end time.
+
 		Calendar calendar = new Calendar();
-		
 		Meeting meeting = new Meeting(3, 25, 10, 10);
+
 		try {
 			calendar.addMeeting(meeting);
-			fail("Expected TimeConflictException");
-
+			fail("Expected TimeConflictException for a meeting with the same start and end time");
 		} catch (TimeConflictException e) {
 			assertEquals("Meeting starts before it ends.", e.getMessage());
 		}
-		
 	}
+
 
 	// Test is passed if an exception is thrown (if getMessage() is not empty)
 	@Test
