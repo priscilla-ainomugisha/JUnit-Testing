@@ -145,19 +145,34 @@ public class CalendarTest {
 
 
 	@Test
-	public void testRemoveMeeting() {
+	public void testRemoveMeeting() throws TimeConflictException {
+		// Test Description: This test verifies that the removeMeeting method successfully removes a scheduled meeting
+		//                  and the calendar is no longer marked as busy for that time slot.
+
 		Calendar calendar = new Calendar();
 		Meeting meeting = new Meeting(7, 12, 10, 11);
+
 		try {
 			calendar.addMeeting(meeting);
-			assertTrue(calendar.isBusy(7, 12, 10, 11));
-			calendar.removeMeeting(7, 12, 0);
-		    assertFalse(calendar.isBusy(7, 12, 10, 11));
 		} catch (TimeConflictException e) {
-			fail("Remove meeting test failed");
+			fail("Unexpected exception during meeting addition: " + e.getMessage());
 		}
-		
+
+		try {
+			assertTrue("Meeting should be scheduled", calendar.isBusy(7, 12, 10, 11));
+		} catch (Exception e) {
+			fail("Unexpected exception during isBusy check: " + e.getMessage());
+		}	
+
+		calendar.removeMeeting(7, 12, 10); 
+
+		try {
+			assertFalse("Meeting should be removed", calendar.isBusy(7, 12, 10, 11));
+		} catch (Exception e) {
+			fail("Unexpected exception during isBusy check after removal: " + e.getMessage());
+		}
 	}
+
 
 
 }
