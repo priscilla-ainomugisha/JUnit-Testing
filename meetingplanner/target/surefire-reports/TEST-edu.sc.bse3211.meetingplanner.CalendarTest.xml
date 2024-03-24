@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.118" tests="6" errors="1" skipped="0" failures="3">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.092" tests="9" errors="1" skipped="0" failures="1">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/home/kalema/jdk-17.0.9/lib"/>
-    <property name="sun.java.command" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire/surefirebooter753477069247091306.jar /home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire 2024-03-24T14-56-04_802-jvmRun1 surefire3685043324838367514tmp surefire_07231699321641036013tmp"/>
+    <property name="sun.java.command" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire/surefirebooter4126154759722708242.jar /home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire 2024-03-24T15-33-19_685-jvmRun1 surefire15859188026565952298tmp surefire_07597867683122747502tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/test-classes:/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/classes:/home/kalema/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/kalema/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire/surefirebooter753477069247091306.jar"/>
+    <property name="surefire.real.class.path" value="/home/kalema/Downloads/JUnit-Testing/meetingplanner/target/surefire/surefirebooter4126154759722708242.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.9+11-LTS-201"/>
     <property name="user.name" value="kalema"/>
@@ -51,31 +51,19 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testPrintAgenda" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.016">
-    <failure type="java.lang.AssertionError">java.lang.AssertionError
-	at edu.sc.bse3211.meetingplanner.CalendarTest.testPrintAgenda(CalendarTest.java:117)
-</failure>
-    <system-out><![CDATA[Agenda for 5:
-5/10, 13 - 14,B101: Meeting 1
-Attending: Namuli Sylvia
-5/18, 9 - 11,C205: Meeting 2
-Attending: Ainomugisha Priscilla
-
-]]></system-out>
-  </testcase>
+  <testcase name="testPrintAgenda" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.006"/>
+  <testcase name="testAddMeeting_invalidStartTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
   <testcase name="testAddMeeting_holiday" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
-  <testcase name="testAddMeeting_meetingsOverlap" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.005">
+  <testcase name="testAddMeeting_meetingsOverlap" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.009">
     <error message="Cannot invoke &quot;String.equals(Object)&quot; because the return value of &quot;edu.sc.bse3211.meetingplanner.Meeting.getDescription()&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "edu.sc.bse3211.meetingplanner.Meeting.getDescription()" is null
 	at edu.sc.bse3211.meetingplanner.CalendarTest.testAddMeeting_meetingsOverlap(CalendarTest.java:58)
 </error>
   </testcase>
-  <testcase name="testClearSchedule" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0"/>
-  <testcase name="testAddMeeting_SameStartTimeEndTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.009">
-    <failure message="expected:&lt;...tarts before it ends[]&gt; but was:&lt;...tarts before it ends[.]&gt;" type="org.junit.ComparisonFailure"><![CDATA[org.junit.ComparisonFailure: expected:<...tarts before it ends[]> but was:<...tarts before it ends[.]>
-	at edu.sc.bse3211.meetingplanner.CalendarTest.testAddMeeting_SameStartTimeEndTime(CalendarTest.java:131)
-]]></failure>
-  </testcase>
-  <testcase name="testAddMeeting_invalidDate" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.003">
+  <testcase name="testClearSchedule" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
+  <testcase name="testAddMeeting_SameStartTimeEndTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0"/>
+  <testcase name="testAddMeeting_invalidEndTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0"/>
+  <testcase name="testGetMeeting" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0"/>
+  <testcase name="testAddMeeting_invalidDate" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001">
     <failure message="Should throw exception for an invalid date." type="java.lang.AssertionError">java.lang.AssertionError: Should throw exception for an invalid date.
 	at edu.sc.bse3211.meetingplanner.CalendarTest.testAddMeeting_invalidDate(CalendarTest.java:41)
 </failure>

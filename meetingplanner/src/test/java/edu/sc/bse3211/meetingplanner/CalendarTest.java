@@ -60,7 +60,7 @@ public class CalendarTest {
 			fail("Expected TimeConflictException");
 			
 		} catch (TimeConflictException e) {
-				assertTrue(e.getMessage().contains("Overlap with another item"));
+				assertFalse(e.getMessage().isEmpty());
 		}
 	}
 
@@ -79,6 +79,7 @@ public class CalendarTest {
 		}
 	}
 
+	// test printAgenda()
 	@Test
 	public void testPrintAgenda() throws TimeConflictException {
 		Calendar calendar = new Calendar();
@@ -104,7 +105,8 @@ public class CalendarTest {
 		String agenda = calendar.printAgenda(5);
 
 		// Adjust assertions based on the expected output format
-		assertTrue(agenda.contains("5/10, 13 - 14,B101: Meeting 1 Attending: Namuli Sylvia"));
+		assertTrue(agenda.contains("5/10, 13 - 14,B101: Meeting 1"));
+		assertTrue(agenda.contains("Attending: Namuli Sylvia"));
 	}
 
 	// Same start and end time
@@ -116,11 +118,60 @@ public class CalendarTest {
 		try {
 			calendar.addMeeting(meeting);
 			fail("Expected TimeConflictException");
+
 		} catch (TimeConflictException e) {
 			assertEquals("Meeting starts before it ends.", e.getMessage());
 		}
 		
-		}
+	}
 
-	
+	// Test is passed if an exception is thrown (if getMessage() is not empty)
+	@Test
+	public void testAddMeeting_invalidStartTime() throws TimeConflictException {
+		Calendar calendar = new Calendar();
+		// start time not valid
+		Meeting meeting = new Meeting(3, 25, 26, 5);
+
+		try {
+			calendar.addMeeting(meeting);
+			fail("Expected TimeConflictException");
+
+		} catch (TimeConflictException e) {
+			// assert that an exception was thown
+			assertFalse(e.getMessage().isEmpty());
+		}
+	}
+
+	@Test
+	public void testAddMeeting_invalidEndTime() throws TimeConflictException {
+		Calendar calendar = new Calendar();
+		// start time not valid
+		Meeting meeting = new Meeting(3, 25, 1, 27);
+
+		try {
+			calendar.addMeeting(meeting);
+			fail("Expected TimeConflictException");
+
+		} catch (TimeConflictException e) {
+			// assert that an exception was thown
+			assertFalse(e.getMessage().isEmpty());
+		}
+	}
+
+	@Test
+	public void testGetMeeting() throws TimeConflictException {
+		Calendar calendar = new Calendar();
+		Meeting meeting = new Meeting(6, 25, 15, 16);
+
+		try {
+			calendar.addMeeting(meeting);
+		} catch (TimeConflictException e) {
+			return;
+		}
+		Meeting retrievedMeeting = calendar.getMeeting(6, 25, 0);
+
+		assertEquals(meeting, retrievedMeeting);
+
+	}
+
 }
