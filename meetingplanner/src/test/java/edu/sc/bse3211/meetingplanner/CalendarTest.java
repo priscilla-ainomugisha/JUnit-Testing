@@ -47,13 +47,12 @@ public class CalendarTest {
 		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException
 		//                       when attempting to add a meeting with a time that overlaps with an existing meeting 
 		//                       on the same date.
-
 		Calendar calendar = new Calendar();
 		Meeting meeting1 = new Meeting(3, 15, 10, 12);
 		Meeting meeting2 = new Meeting(3, 15, 11, 13); 
 
-		calendar.addMeeting(meeting1);
 		try {
+			calendar.addMeeting(meeting1);
 			calendar.addMeeting(meeting2); 
 			fail("Expected TimeConflictException for overlapping meetings");
 		} catch (TimeConflictException e) {
@@ -61,44 +60,39 @@ public class CalendarTest {
 		}
 	}
 
-
-	// The test fails if an exception is thrown, because it means the calendar is busy and clearSchedule() failed.
 	@Test
 	public void testClearSchedule() throws TimeConflictException {
-		try {
-			Calendar calendar = new Calendar();
-			Meeting meeting = new Meeting(4, 20, 9, 10);
-			calendar.addMeeting(meeting);
+		// **Test Description:** This test verifies that the clearSchedule method successfully removes a scheduled meeting 
+		//                       and the calendar is no longer marked as busy for that time slot.
 
-			calendar.clearSchedule(4, 20);
-			assertFalse(calendar.isBusy(4, 20, 9, 10));
+		Calendar calendar = new Calendar();
+		Meeting meeting = new Meeting(4, 20, 9, 10);
+		try {
+			calendar.addMeeting(meeting);
 		} catch (TimeConflictException e) {
-			fail("Should not throw exception: " + e.getMessage());
+			fail("Unexpected exception during meeting addition: " + e.getMessage());
 		}
+		calendar.clearSchedule(4, 20); 
+		assertFalse("Meeting should be removed", calendar.isBusy(4, 20, 9, 10));
 	}
 
-	// Test fails of the output expected is not obtained
+
 	@Test
 	public void testPrintAgenda() throws TimeConflictException {
+		// **Test Description:** This test verifies that the printAgenda method formats the meeting agenda correctly, 
+		//                       including meeting details (date, time, room, attendees, title).
+
 		Calendar calendar = new Calendar();
-
 		Room room1 = new Room("B101");
-
 		Person sylvia = new Person("Namuli Sylvia");
-		ArrayList<Person> attendees1 = new ArrayList<>(Arrays.asList(sylvia));;
-
+		ArrayList<Person> attendees1 = new ArrayList<>(Arrays.asList(sylvia));
 		Meeting meeting1 = new Meeting(5, 10, 13, 14, attendees1, room1, "Meeting 1");
 
-		try {
-			calendar.addMeeting(meeting1);
-		} catch (TimeConflictException e) {
-			fail("addMeeting() failed.");
-		}
-
+		calendar.addMeeting(meeting1);
 		String agenda = calendar.printAgenda(5);
 
-		assertTrue(agenda.contains("5/10, 13 - 14,B101: Meeting 1"));
-		assertTrue(agenda.contains("Attending: Namuli Sylvia"));
+		String expectedOutput = "5/10, 13 - 14,B101: Meeting 1\nAttending: Namuli Sylvia"; 
+		assertEquals("Meeting agenda should match expected format", expectedOutput, agenda);
 	}
 
 	// Test fails if no exception is thrown
