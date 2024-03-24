@@ -1,6 +1,7 @@
-## Unit Testing for the Meeting Planner Java Application
+## Unit Testing for the Meeting Planner Java Application.
+The Meeting Planner Java Application is a software solution designed to facilitate the scheduling and management of meetings. This project employs the JUnit testing framework for ensuring the reliability and correctness of its functionalities.
 
-####Project Installation
+#### Project Installation
 ```
 git clone https://github.com/MartinKalema/JUnit-Testing
 ```
