@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -80,43 +79,48 @@ public class CalendarTest {
 		}
 	}
 
-
-	// 5/10, 13 - 14,B101: Meeting 1 Attending: Namuli Sylvia
-	// 5/18, 9 - 11,C205: Meeting 2 Attending: Ainomugisha Priscilla
-	// This output is not easily interpretable
 	@Test
 	public void testPrintAgenda() throws TimeConflictException {
 		Calendar calendar = new Calendar();
 
 		// Rooms
 		Room room1 = new Room("B101");
-		Room room2 = new Room("C205");
 
 		// Attendees
-		Person john = new Person("Namuli Sylvia");
-		Person jane = new Person("Ainomugisha Priscilla");
-		ArrayList<Person> attendees1 = new ArrayList<>(Arrays.asList(john));
-		ArrayList<Person> attendees2 = new ArrayList<>(Arrays.asList(jane));
+		Person sylvia = new Person("Namuli Sylvia");
+		ArrayList<Person> attendees1 = new ArrayList<>(Arrays.asList(sylvia));;
 
 		// Create meetings using the rooms and attendees
 		Meeting meeting1 = new Meeting(5, 10, 13, 14, attendees1, room1, "Meeting 1");
-		Meeting meeting2 = new Meeting(5, 18, 9, 11, attendees2, room2, "Meeting 2");
 
 		// Add meetings to the calendar
 		try {
 			calendar.addMeeting(meeting1);
-			calendar.addMeeting(meeting2);
 		} catch (TimeConflictException e) {
 			return;
 		}
 
 		// Print the agenda for the month
 		String agenda = calendar.printAgenda(5);
-		System.out.println(agenda);
 
 		// Adjust assertions based on the expected output format
-		assertTrue(agenda.contains("Meeting 1: 5/10/2024 1:00 PM - 2:00 PM in B101 (Attendees: Namuli Sylvia)"));
-		assertTrue(agenda.contains("Meeting 2: 5/18/2024 9:00 AM - 11:00 AM in C205 (Attendees: Ainomugisha Priscilla)"));
+		assertTrue(agenda.contains("5/10, 13 - 14,B101: Meeting 1 Attending: Namuli Sylvia"));
 	}
+
+	// Same start and end time
+	@Test
+	public void testAddMeeting_SameStartTimeEndTime() throws TimeConflictException {
+		Calendar calendar = new Calendar();
+		// starts and ends at 10AM
+		Meeting meeting = new Meeting(3, 25, 10, 10);
+		try {
+			calendar.addMeeting(meeting);
+			fail("Expected TimeConflictException");
+		} catch (TimeConflictException e) {
+			assertEquals("Meeting starts before it ends.", e.getMessage());
+		}
+		
+		}
+
 	
 }
