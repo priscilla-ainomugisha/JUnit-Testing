@@ -14,12 +14,10 @@ public class CalendarTest {
 	
 	@Test
 	public void testAddMeeting_holiday() {
-		Calendar calendar = new Calendar();
-		// Create Janan Luwum holiday	
+		Calendar calendar = new Calendar();	
 		try {
 			Meeting janan = new Meeting(2, 16, "Janan Luwum");
 			calendar.addMeeting(janan);
-			// Verify that it was added.
 			Boolean added = calendar.isBusy(2, 16, 0, 23);
 			assertTrue("Janan Luwum Day should be marked as busy on the calendar",added);
 		} catch(TimeConflictException e) {
@@ -27,24 +25,25 @@ public class CalendarTest {
 		}
 	}
 
-	// Test fails if an exception is not thrown. Also, we check whether the appropriate exception "Day does not exist" is thrown.
 	@Test
 	public void testAddMeeting_invalidDate() throws TimeConflictException {
+		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException 
+   		//                       when attempting to add a meeting with an invalid date (e.g February 30th).
 		Calendar calendar = new Calendar();
-
 		Room room = new Room("B141");
-		Person john = new Person("Namuli Sylvia");
-		ArrayList<Person> attendee = new ArrayList<>(Arrays.asList(john));
+		Person sylvia = new Person("Namuli Sylvia");
+		ArrayList<Person> attendee = new ArrayList<>(Arrays.asList(sylvia));
 		try {
-			Meeting meeting = new Meeting(2, 30, 10, 12,  attendee, room, "Invalid Meeting");
+			Meeting meeting = new Meeting(2, 30, 10, 12, attendee, room, "Invalid Meeting");
 			calendar.addMeeting(meeting);
-			fail("Should throw exception for an invalid date.");
+			fail("Expected TimeConflictException for an invalid date.");
 		} catch (TimeConflictException e) {
 			assertEquals("Day does not exist.", e.getMessage());
 		}
 	}
 
-	// This test fails if the exception "Overlap with another meeting" is not thrown.
+
+	
 	@Test
 	public void testAddMeeting_meetingsOverlap() throws TimeConflictException {
 		Calendar calendar = new Calendar();
