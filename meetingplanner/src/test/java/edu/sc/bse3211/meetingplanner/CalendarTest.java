@@ -112,18 +112,19 @@ public class CalendarTest {
 	}
 
 
-	// Test is passed if an exception is thrown (if getMessage() is not empty)
 	@Test
-	public void testAddMeeting_invalidStartTime() throws TimeConflictException {
+	public void testAddMeeting_invalidStartTime() {
+		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException
+		//                       with a descriptive message when attempting to add a meeting with an invalid start time (past midnight).
 		Calendar calendar = new Calendar();
-		
-		Meeting meeting = new Meeting(3, 25, 26, 5);
+		Meeting meeting = new Meeting(3, 25, 26, 5); 
+
 		try {
 			calendar.addMeeting(meeting);
-			fail("Expected TimeConflictException");
-
+			fail("Expected TimeConflictException for invalid start time");
 		} catch (TimeConflictException e) {
-			assertFalse(e.getMessage().isEmpty());
+			// Assert the specific exception type and message
+			assertTrue(e.getMessage().contains("Meeting starts before it ends."));
 		}
 	}
 
