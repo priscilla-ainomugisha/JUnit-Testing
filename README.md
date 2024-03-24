@@ -23,4 +23,7 @@ mvn test
 mvn -Dtest=test_filename#method_name test
 ```
 For example, to run testIsBusy() located in CalendarTest.java. I will use the command below.
-```mvn -Dtest=CalendarTest#testIsBusy test```
+
+```
+mvn -Dtest=CalendarTest#testIsBusy test
+```
