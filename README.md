@@ -21,7 +21,7 @@ mvn clean compile
 ```
 mvn test
 ```
-#### Run particular test function/method
+#### Run Specific Test Method (Linux)
 ```
 mvn -Dtest=testFileName#testMethodName test
 ```
@@ -30,3 +30,4 @@ For example, to run testIsBusy() located in CalendarTest.java, use the command b
 ```
 mvn -Dtest=CalendarTest#testIsBusy test
 ```
+Windows users i'm sorry (:
