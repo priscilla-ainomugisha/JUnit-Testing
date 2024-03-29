@@ -77,4 +77,4 @@ testToString() tests the toString() method of the Meeting class to
  pushing........
  git add A
  git commit -m "..."
- git push -u origin main*/
+ git push -u origin maing*/
