@@ -34,7 +34,7 @@ public class CalendarTest {
 		Person sylvia = new Person("Namuli Sylvia");
 		ArrayList<Person> attendee = new ArrayList<>(Arrays.asList(sylvia));
 		try {
-			Meeting meeting = new Meeting(2, 30, 10, 12, attendee, room, "Invalid Meeting");
+			Meeting meeting = new Meeting(2, 35, 10, 12, attendee, room, "Invalid Meeting");
 			calendar.addMeeting(meeting);
 			fail("Expected TimeConflictException for an invalid date.");
 		} catch (TimeConflictException e) {
@@ -44,19 +44,33 @@ public class CalendarTest {
 	
 	@Test
 	public void testAddMeeting_meetingsOverlap() throws TimeConflictException {
-		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException
-		//                       when attempting to add a meeting with a time that overlaps with an existing meeting 
-		//                       on the same date.
+		// **Test Description:** This test verifies that the addMeeting method throws a TimeConflictException 
+		//                       when attempting to add a meeting that overlaps with an existing meeting.
+	
+		// Create a calendar
 		Calendar calendar = new Calendar();
-		Meeting meeting1 = new Meeting(3, 15, 10, 12);
-		Meeting meeting2 = new Meeting(3, 15, 11, 13); 
-
+		
+		// Create a room
+		Room room = new Room("B141");
+		
+		// Create attendees
+		Person sylvia = new Person("Namuli Sylvia");
+		ArrayList<Person> attendees = new ArrayList<>(Arrays.asList(sylvia));
+		
+		// Create a meeting with a non-null description
+		Meeting existingMeeting = new Meeting(2, 20, 10, 12, attendees, room, "Existing Meeting");
+		
+		// Add the existing meeting to the calendar
+		calendar.addMeeting(existingMeeting);
+		
+		// Attempt to add another meeting that overlaps with the existing meeting
 		try {
-			calendar.addMeeting(meeting1);
-			calendar.addMeeting(meeting2); 
-			fail("Expected TimeConflictException for overlapping meetings");
+			Meeting overlappingMeeting = new Meeting(2, 20, 11, 13, attendees, room, "Overlapping Meeting");
+			calendar.addMeeting(overlappingMeeting);
+			fail("Expected TimeConflictException for overlapping meetings.");
 		} catch (TimeConflictException e) {
-			assertTrue(e.getMessage().contains("Overlap with another item"));
+			// Verify that the exception message contains the description of the conflicting meeting
+			assertEquals("Overlap with another item - Existing Meeting - scheduled from 10 and 12", e.getMessage());
 		}
 	}
 

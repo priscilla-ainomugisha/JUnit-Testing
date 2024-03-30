@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: edu.sc.bse3211.meetingplanner.CalendarTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.11 s <<< FAILURE! - in edu.sc.bse3211.meetingplanner.CalendarTest
-testAddMeeting_meetingsOverlap(edu.sc.bse3211.meetingplanner.CalendarTest)  Time elapsed: 0.014 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "edu.sc.bse3211.meetingplanner.Meeting.getDescription()" is null
-	at edu.sc.bse3211.meetingplanner.CalendarTest.testAddMeeting_meetingsOverlap(CalendarTest.java:56)
-
-testAddMeeting_invalidDate(edu.sc.bse3211.meetingplanner.CalendarTest)  Time elapsed: 0.003 s  <<< FAILURE!
-java.lang.AssertionError: Expected TimeConflictException for an invalid date.
-	at edu.sc.bse3211.meetingplanner.CalendarTest.testAddMeeting_invalidDate(CalendarTest.java:39)
-
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.17 s - in edu.sc.bse3211.meetingplanner.CalendarTest

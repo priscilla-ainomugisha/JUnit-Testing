@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.17" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.sc.bse3211.meetingplanner.MeetingTest" time="0.002" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -59,13 +59,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testPrintAgenda" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.056"/>
-  <testcase name="testAddMeeting_invalidStartTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0"/>
-  <testcase name="testAddMeeting_holiday" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
-  <testcase name="testRemoveMeeting" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.003"/>
-  <testcase name="testAddMeeting_meetingsOverlap" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.017"/>
-  <testcase name="testClearSchedule" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
-  <testcase name="testAddMeeting_SameStartTimeEndTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.005"/>
-  <testcase name="testAddMeeting_invalidEndTime" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0"/>
-  <testcase name="testAddMeeting_invalidDate" classname="edu.sc.bse3211.meetingplanner.CalendarTest" time="0.001"/>
+  <testcase name="testAddAttendee" classname="edu.sc.bse3211.meetingplanner.MeetingTest" time="0"/>
+  <testcase name="testToString" classname="edu.sc.bse3211.meetingplanner.MeetingTest" time="0"/>
+  <testcase name="testMeetingInitialization" classname="edu.sc.bse3211.meetingplanner.MeetingTest" time="0"/>
+  <testcase name="testRemoveAttendee" classname="edu.sc.bse3211.meetingplanner.MeetingTest" time="0"/>
 </testsuite>
