@@ -1,7 +1,9 @@
 package edu.sc.bse3211.meetingplanner;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
+import org.junit.Before;
 
 
 public class RoomTest {

@@ -52,7 +52,7 @@ public class Meeting {
 	 * @param start - The time the meeting starts (0-23).
 	 * @param end - The time the meeting ends (0-23).
 	 */
-	public Meeting(int month, int day, int start, int end){
+	public Meeting (int month, int day, int start, int end){
 		this.month=month;
 		this.day=day;
 		this.start=start;
@@ -74,7 +74,7 @@ public class Meeting {
 		this.day=day;
 		this.start=start;
 		this.end=end;
-		this.attendees = attendees;
+		this.attendees = new ArrayList<>(attendees);
 		this.room = room;
 		this.description = description;
 	}
@@ -166,5 +166,8 @@ public class Meeting {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	// Validate the date
+    
+    
 
 }

@@ -105,42 +105,43 @@ public class Calendar {
 	 * @param toAdd - A Meeting object to add to the calendar
 	 * @throws TimeConflictException - If an invalid date or time is entered.
 	 */
-	public void addMeeting(Meeting toAdd) throws TimeConflictException{
+	public void addMeeting(Meeting toAdd) throws TimeConflictException {
 		int mDay = toAdd.getDay();
 		int mMonth = toAdd.getMonth();
 		int mStart = toAdd.getStartTime();
 		int mEnd = toAdd.getEndTime();
-		
-		checkTimes(mMonth,mDay,mStart,mEnd);
-
-		
+	
+		checkTimes(mMonth, mDay, mStart, mEnd);
+	
+		// Ensure occupied ArrayList is properly initialized
+		ensureOccupiedInitialized(mMonth, mDay);
+	
 		// Check whether a meeting is already scheduled at this time.
 		ArrayList<Meeting> thatDay = occupied.get(mMonth).get(mDay);
 		boolean booked = false;
 		Meeting conflict = new Meeting();
-		
-		for(Meeting toCheck : thatDay){
-			if(!toCheck.getDescription().equals("Day does not exist")){
+	
+		for (Meeting toCheck : thatDay) {
+			if (!toCheck.getDescription().equals("Day does not exist")) {
 				// Does the start time fall between this meeting's start and end times?
-				if(mStart >= toCheck.getStartTime() && mStart <= toCheck.getEndTime()){
+				if (mStart >= toCheck.getStartTime() && mStart <= toCheck.getEndTime()) {
 					booked = true;
 					conflict = toCheck;
 					// Does the end time fall between this meeting's start and end times?
-				}else if(mEnd >= toCheck.getStartTime() && mEnd <= toCheck.getEndTime()){
+				} else if (mEnd >= toCheck.getStartTime() && mEnd <= toCheck.getEndTime()) {
 					booked = true;
 					conflict = toCheck;
 				}
 			}
 		}
-		
-		if(booked){
-			throw new TimeConflictException("Overlap with another item - "+conflict.getDescription()
-				+" - scheduled from "+conflict.getStartTime()+" and "+conflict.getEndTime());
-		}else{
+	
+		if (booked) {
+			throw new TimeConflictException("Overlap with another item - " + conflict.getDescription()
+					+ " - scheduled from " + conflict.getStartTime() + " and " + conflict.getEndTime());
+		} else {
 			occupied.get(mMonth).get(mDay).add(toAdd);
 		}
 	}
-	
 	/**
 	 * Clears all meetings for a day.
 	 * @param month - The month of the meeting (1-12)
@@ -151,35 +152,82 @@ public class Calendar {
 	}
 	
 	/**
-	 * Used to print the calendar for a month in string form.
-	 * @param month - The month of the meeting (1-12)
-	 * @return String - The agenda as a formatted string.
-	 */
-	public String printAgenda(int month){
-		String agenda = "Agenda for "+month+":\n";
-		for(ArrayList<Meeting> toPrint : occupied.get(month)){
-			for(Meeting meeting: toPrint){
-				agenda = agenda+meeting.toString()+"\n";
+     * Used to print the agenda for a month in string form.
+     *
+     * @param month - The month for which the agenda is printed (1-12).
+     * @return String - The agenda as a formatted string.
+     */
+
+    public String printAgenda(int month) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Month must be between 1 and 12.");
+        }
+
+        // Ensure occupied ArrayList is properly initialized
+        if (occupied == null || month >= occupied.size() || occupied.get(month) == null) {
+            throw new IllegalStateException("Invalid occupied data structure.");
+        }
+
+        String agenda = "Agenda for " + month + ":\n";
+        for (ArrayList<Meeting> toPrint : occupied.get(month)) {
+            for (Meeting meeting : toPrint) {
+                agenda = agenda + meeting.toString() + "\n";
+				
+            }
+        }
+        System.out.println("Agenda for month " + month + ":\n" + agenda); // Added print statement
+        return agenda;
+    }
+
+    /**
+     * Used to print the agenda for a day in string form.
+     *
+     * @param month - The month of the meeting (1-12).
+     * @param day   - The day of the meeting (1-31).
+     * @return String - The agenda as a formatted string.
+     */
+
+	public String printAgenda(int month, int day) {
+		if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("Month must be between 1 and 12.");
+		}
+		if (day < 1 || day > 31) {
+			throw new IllegalArgumentException("Day must be between 1 and 31.");
+		}
+	
+		// Ensure occupied ArrayList is properly initialized
+		ensureOccupiedInitialized(month, day);
+	
+		// Ensure nested ArrayList is not null
+		ArrayList<ArrayList<Meeting>> dayList = occupied.get(month);
+		if (dayList == null || day >= dayList.size() || dayList.get(day) == null) {
+			throw new IllegalStateException("Invalid occupied data structure for day: " + day);
+		}
+
+		for (ArrayList<Meeting> meetings : dayList) {
+			if (meetings == null) {
+				System.out.println("Encountered null element in dayList");
+			} else {
+				 meetings.size();
 			}
 		}
 
-		return agenda;
-	}
+		// Check if there are meetings scheduled for the specified day
+		ArrayList<Meeting> meetingsForDay = dayList.get(day);
 
-	/**
-	 * Used to print the calendar for a day in string form.
-	 * @param month - The month of the meeting (1-12)
-	 * @param day - The day of the meeting (1-31)
-	 * @return String - The agenda as a formatted string.
-	 */
-	public String printAgenda(int month, int day){
-		String agenda = "Agenda for "+month+"/"+day+":\n";
-		for(Meeting toPrint : occupied.get(month).get(day)){
-			agenda = agenda+toPrint.toString()+"\n";
-		}
-		
+		// Print the agenda 
+		String agenda = "Agenda for " + month + "/" + day + ":\n";
+		String agendam = "Agenda for " + month + "/" + ":\n";
+
+		// Additional debug statement
+		System.out.println("Agenda for day " + month + "/" + day + ":\n" + agenda);
+		// Additional debug statement
+		System.out.println("Agenda for month " + month + "/" + ":\n" + agendam);
+
 		return agenda;
-	}
+
+			}
+
 	
 	/**
 	 * Retrieves a meeting from the calendar.
@@ -197,7 +245,29 @@ public class Calendar {
 	 * @param day - The day of the meeting (1-31)
 	 * @param index - The index in the list for the meeting
 	 */
-	public void removeMeeting(int month, int day, int index){
-		occupied.get(month).get(day).remove(index);
+	public void removeMeeting(int month, int day, int index) {
+		ArrayList<ArrayList<Meeting>> monthList = occupied.get(month);
+		if (monthList != null && day >= 0 && day < monthList.size()) {
+			ArrayList<Meeting> dayList = monthList.get(day);
+			if (dayList != null && index >= 0 && index < dayList.size()) {
+				dayList.remove(index);
+			}
+		}
+	}
+	
+	// Helper method to ensure occupied ArrayList is properly initialized for the specified month and day
+	private void ensureOccupiedInitialized(int month, int day) {
+		if (occupied == null || month < 0 || month >= occupied.size()) {
+			throw new IllegalStateException("Invalid occupied data structure for month: " + month);
+		}
+	
+		ArrayList<ArrayList<Meeting>> monthList = occupied.get(month);
+		if (monthList == null || day < 0 || day >= monthList.size()) {
+			throw new IllegalStateException("Invalid occupied data structure for day: " + day);
+		}
+	
+		if (monthList.get(day) == null) {
+			monthList.set(day, new ArrayList<>());
+		}
 	}
 }
